@@ -21,27 +21,21 @@ typedef struct _object {
 
 typedef PyObject* (*binaryfunc)(PyObject*, PyObject*);
 typedef long (*hashfunc)(PyObject *);
-typedef int (*printfunc)(PyObject*, FILE*, int);
+typedef int (*printfunc)(PyObject*);
 
 typedef struct {
-
   binaryfunc add;
-
 } PyNumberMethods;
 
 
 typedef struct _typeobject {
   PyObject_HEAD
-
   const char* tp_name;
-  
-  // PyNumberMethods tp_as_number;
   PyNumberMethods *tp_as_number;
-  
   hashfunc tp_hash; 
-
   printfunc tp_print;
-
 } PyTypeObject;
+
+extern PyTypeObject PyType_Type;
 
 #endif
