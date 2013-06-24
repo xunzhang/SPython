@@ -9,21 +9,19 @@ PyObject* CreatePyIntObject(int val) {
   return (PyObject *) object;
 }
 
-static long int_hash(PyObject* v) {
-  PyIntObject *w = (PyIntObject *)v;
-  int x = w->ob_ival;
+static long int_hash(PyIntObject* v) {
+  int x = v->ob_ival;
   if(x == -1)
     x = -2;
   return (long)x;
 }
 
-static int int_print(PyObject* v) {
-  PyIntObject* intv = (PyIntObject *)v;
-  printf("%d\n", intv->ob_ival);
+static int int_print(PyIntObject* v) {
+  printf("%d\n", v->ob_ival);
   return 0;
 }
 
-static PyObject* int_add(PyIntObject* l, PyIntObject* r) {
+static PyObject* int_add(PyIntObject *l, PyIntObject *r) {
   PyIntObject *sum = (PyIntObject *)CreatePyIntObject(0);
   if(sum == NULL) {
     printf("new PyIntObject error!\n");
@@ -42,6 +40,6 @@ PyTypeObject PyInt_Type = {
   PyObject_HEAD_INIT(&PyType_Type)
   "int",
   &int_as_number,
-  int_hash,
-  int_print,
+  (hashfunc)int_hash,
+  (printfunc)int_print,
 };
