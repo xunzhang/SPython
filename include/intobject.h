@@ -8,6 +8,8 @@ typedef struct {
   int ob_ival;
 } PyIntObject;
 
+extern PyTypeObject PyInt_Type;
+
 PyObject* CreatePyIntObject(int);
 
 #endif

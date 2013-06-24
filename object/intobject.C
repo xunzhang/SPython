@@ -1,4 +1,5 @@
 #include "intobject.h"
+#include <stdlib.h>
 
 PyObject* CreatePyIntObject(int val) {
   PyIntObject* object= new PyIntObject;
@@ -9,7 +10,8 @@ PyObject* CreatePyIntObject(int val) {
 }
 
 static long int_hash(PyObject* v) {
-  int x = v->ob_ival;
+  PyIntObject *w = (PyIntObject *)v;
+  int x = w->ob_ival;
   if(x == -1)
     x = -2;
   return (long)x;
@@ -35,7 +37,6 @@ static PyObject* int_add(PyIntObject* l, PyIntObject* r) {
 static PyNumberMethods int_as_number = {
   (binaryfunc)int_add,
 };
-
 
 PyTypeObject PyInt_Type = {
   PyObject_HEAD_INIT(&PyType_Type)
