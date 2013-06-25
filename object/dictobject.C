@@ -20,7 +20,7 @@ PyObject* PyDict_GetItem(PyObject *target, PyObject *key) {
   std::map<long, PyObject*> dict = ((PyDictObject *)target)->dict;
   std::map<long, PyObject*>::iterator it = dict.find(keyHashValue);
   std::map<long, PyObject*>::iterator end = dict.end();
-  if(it == end)  return NULL;
+  if(it == end) return NULL;
   return it->second;
 }
 
