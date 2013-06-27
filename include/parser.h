@@ -45,8 +45,10 @@ private:
     std::string::size_type pos = 0;
     // a little slow, debug mode
     checklegel(cmd);
-    if((pos = cmd.find("print ")) != std::string::npos) 
-      print((std::string)cmd.substr(6));
+    if((pos = cmd.find("print ")) != std::string::npos) {
+      std::string tmp = cmd.substr(6);
+      print(tmp);
+    }
     else if((pos = cmd.find(" = ")) != std::string::npos) {
       std::string v = cmd.substr(0, pos);
       std::string w = cmd.substr(pos + 3);
@@ -57,7 +59,7 @@ private:
     }
   }
   
-  // bug: why cannot add '&' ?	
+  // notice: no '&' symbol
   // no flexiable, can not support case: print "spython", TBO
   PyObject* getobj(std::string varname) {
     PyObject *key = PyStr_Create(varname.c_str()); 
@@ -69,8 +71,7 @@ private:
     return val;
   }
 
-  // bug: why cannot add '&' ?	
-  void print(std::string var) {
+  void print(std::string& var) {
     PyObject *obj = getobj(var);
     (obj->ob_type)->tp_print(obj);
   }
