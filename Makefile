@@ -1,32 +1,21 @@
-# Makefile
-#vpath %.h /home/xunzhang/桌面/SPython/include
+SRC_PATH=./object
+DRIVER_PATH=./python
 
-CXX = g++
-CXXFLAGS = -Wall
-CPPFLAGS = -I./include
+CXX=g++
+CXXFLAGS=-Wall
+CPPFLAGS=-I./include
 
-objects = dictobject.o intobject.o stringobject.o typeobject.o
+main : dictobject.o intobject.o stringobject.o typeobject.o driver.o
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-main : driver.o $(objects)
-	$(CXX) -o main driver.o $(objects)
+%.o :  
+	$(CXX) -c $(CPPFLAGS) $(SRC_PATH)/$(subst .o,.C,$@)
 
 driver.o : 
-	$(CXX) -c $(CPPFLAGS) ./python/driver.C
-
-dictobject.o : 
-	$(CXX) -c $(CPPFLAGS) ./object/dictobject.C
-
-intobject.o : 
-	$(CXX) -c $(CPPFLAGS) ./object/intobject.C
-
-stringobject.o : 
-	$(CXX) -c $(CPPFLAGS) ./object/stringobject.C
-
-typeobject.o : 
-	$(CXX) -c $(CPPFLAGS) ./object/typeobject.C
+	$(CXX) -c $(CPPFLAGS) $(DRIVER_PATH)/driver.C
 
 .PHONY:
 	clean
 
-clean : 
-	-rm main driver.o $(objects) 
+clean:
+	-rm main *.o
